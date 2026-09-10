@@ -20,102 +20,83 @@ type CartItem = Product & {
 const products: Product[] = [
   {
     id: 1,
-    name: "Beras Pandan Wangi",
-    category: "Beras & Sembako",
-    price: 17500,
-    unit: "kg",
-    altUnit: "5 kg",
-    image: "/assets/beras.jpg",
-    badge: "Paling laris",
+    name: "Ayam Kampung",
+    category: "Peternakan",
+    price: 110000,
+    unit: "ekor",
+    image: "/assets/ayam-kampung.jpg",
+    badge: "Rp110rb–130rb",
     description:
-      "Beras pulen pilihan dengan aroma pandan alami. Cocok untuk kebutuhan makan harian keluarga.",
-    origin: "Cianjur, Jawa Barat",
+      "Ayam kampung asli, dijual per ekor dengan harga Rp110.000–Rp130.000 tergantung ukuran. Cocok untuk opor, soto, atau ungkep.",
+    origin: "Kendari, Sulawesi Tenggara",
   },
   {
     id: 2,
-    name: "Telur Ayam Negeri",
+    name: "Ayam Potong Negeri",
     category: "Peternakan",
-    price: 32000,
-    unit: "kg",
-    altUnit: "10 butir",
-    image: "/assets/telur.jpg",
+    price: 60000,
+    unit: "ekor",
+    image: "/assets/ayam-negeri.jpg",
     badge: "Segar hari ini",
     description:
-      "Telur ayam segar berkualitas, disortir satu per satu dan dikirim dengan kemasan aman.",
-    origin: "Bogor, Jawa Barat",
+      "Ayam potong negeri segar, dijual per ekor. Praktis untuk goreng, bakar, maupun masakan sehari-hari.",
+    origin: "Kendari, Sulawesi Tenggara",
   },
   {
     id: 3,
-    name: "Daging Sapi Segar",
-    category: "Peternakan",
-    price: 138000,
+    name: "Ikan Cakalang",
+    category: "Ikan & Seafood",
+    price: 20000,
     unit: "kg",
-    altUnit: "500 gr",
-    image: "/assets/daging.jpg",
+    image: "/assets/cakalang.jpg",
+    badge: "Baru tiba",
     description:
-      "Daging sapi merah segar dengan potongan serbaguna untuk rendang, sop, atau tumisan.",
-    origin: "Boyolali, Jawa Tengah",
+      "Ikan cakalang segar hasil tangkapan nelayan lokal, cocok untuk cakalang fufu, sup, maupun digoreng.",
+    origin: "Kendari, Sulawesi Tenggara",
   },
   {
     id: 4,
-    name: "Ikan Kembung",
+    name: "Ikan Katombo",
     category: "Ikan & Seafood",
-    price: 46000,
+    price: 20000,
     unit: "kg",
-    altUnit: "500 gr",
-    image: "/assets/ikan.jpg",
-    badge: "Baru tiba",
+    image: "/assets/katombo.jpg",
     description:
-      "Ikan kembung segar hasil tangkapan nelayan lokal, kaya protein dan omega-3.",
-    origin: "Batam, Kepulauan Riau",
+      "Ikan katombo (kembung) segar, kaya protein dan omega-3, cocok untuk digoreng atau dibumbu bakar.",
+    origin: "Kendari, Sulawesi Tenggara",
   },
   {
     id: 5,
-    name: "Paket Sayur Sop",
+    name: "Tomat",
     category: "Sayur & Buah",
-    price: 12000,
-    unit: "paket",
-    image: "/assets/sayur.jpg",
+    price: 15000,
+    unit: "ikat",
+    image: "/assets/tomat.jpg",
     description:
-      "Paket praktis berisi wortel, kentang, kol, daun bawang, dan seledri untuk satu kali masak.",
-    origin: "Kebun Mitra Lokal",
+      "Tomat merah segar, dijual per ikat. Cocok untuk sambal, jus, maupun masakan sehari-hari.",
+    origin: "Kendari, Sulawesi Tenggara",
   },
   {
     id: 6,
-    name: "Tomat Merah",
+    name: "Sayur Kangkung",
     category: "Sayur & Buah",
-    price: 14000,
-    unit: "kg",
-    altUnit: "500 gr",
-    image: "/assets/tomat.jpg",
+    price: 7000,
+    unit: "ikat",
+    image: "/assets/kangkung.jpg",
     description:
-      "Tomat merah matang pilihan, segar untuk sambal, jus, maupun masakan sehari-hari.",
-    origin: "Berastagi, Sumatera Utara",
+      "Kangkung segar dipetik pagi hari, dijual per ikat. Cocok untuk ditumis maupun plecing.",
+    origin: "Kendari, Sulawesi Tenggara",
   },
   {
     id: 7,
-    name: "Cabai Merah Keriting",
+    name: "Kacang Panjang",
     category: "Sayur & Buah",
-    price: 48000,
-    unit: "kg",
-    altUnit: "250 gr",
-    image: "/assets/cabai.jpg",
-    badge: "Harga panen",
+    price: 5000,
+    unit: "ikat",
+    image: "/assets/kacang-panjang.jpg",
     description:
-      "Cabai merah keriting segar dengan tingkat pedas pas dan warna merah alami.",
-    origin: "Kerinci, Jambi",
-  },
-  {
-    id: 8,
-    name: "Minyak Goreng Premium",
-    category: "Beras & Sembako",
-    price: 38500,
-    unit: "2 liter",
-    altUnit: "1 liter",
-    image: "/assets/minyak.jpg",
-    description:
-      "Minyak goreng jernih berkualitas untuk kebutuhan dapur rumah tangga.",
-    origin: "Produk Indonesia",
+      "Kacang panjang segar, dijual per ikat. Cocok untuk tumisan maupun lalapan.",
+    origin: "Kendari, Sulawesi Tenggara",
   },
 ];
 const money = (n: number) =>
@@ -132,13 +113,7 @@ export default function Home() {
     [detail, setDetail] = useState<Product | null>(null),
     [unit, setUnit] = useState(""),
     [sheet, setSheet] = useState<"info" | "contact" | null>(null);
-  const categories = [
-    "Semua",
-    "Beras & Sembako",
-    "Sayur & Buah",
-    "Ikan & Seafood",
-    "Peternakan",
-  ];
+  const categories = ["Semua", "Sayur & Buah", "Ikan & Seafood", "Peternakan"];
   const filtered = useMemo(
     () =>
       products.filter(
@@ -148,20 +123,9 @@ export default function Home() {
       ),
     [category, search],
   );
-  const priceFor = (p: Product, u: string) =>
-    u.includes("500 gr")
-      ? p.price / 2
-      : u.includes("250 gr")
-        ? p.price / 4
-        : u.includes("5 kg")
-          ? p.price * 5
-          : u.includes("10 butir")
-            ? 22000
-            : u.includes("1 liter")
-              ? 20500
-              : p.price;
+  const priceFor = (p: Product) => p.price;
   function add(p: Product, u = p.unit) {
-    const price = priceFor(p, u);
+    const price = priceFor(p);
     setCart((c) => {
       const i = c.findIndex((x) => x.id === p.id && x.selectedUnit === u);
       return i < 0
@@ -231,8 +195,8 @@ export default function Home() {
             <em>sampai ke dapur Anda.</em>
           </h1>
           <p>
-            Belanja beras, sayur, ikan, daging, dan kebutuhan pokok pilihan.
-            Harga jujur, kualitas terjaga.
+            Belanja ayam, ikan, dan sayur segar pilihan. Harga jujur,
+            kualitas terjaga.
           </p>
           <a href="#produk" className="primary">
             Mulai belanja <b>→</b>
@@ -257,7 +221,7 @@ export default function Home() {
       <section className="categoryStrip">
         {categories.slice(1).map((c, i) => (
           <button key={c} onClick={() => setCategory(c)}>
-            <i>{["🌾", "🥬", "🐟", "🥚"][i]}</i>
+            <i>{["🥬", "🐟", "🐔"][i]}</i>
             <span>{c}</span>
             <small>Lihat pilihan →</small>
           </button>
@@ -548,7 +512,7 @@ export default function Home() {
                     key={u}
                   >
                     {u}
-                    <small>{money(priceFor(detail, u!))}</small>
+                    <small>{money(priceFor(detail))}</small>
                   </button>
                 ))}
               </div>
