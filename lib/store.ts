@@ -1,5 +1,5 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { Redis } from "@upstash/redis";
+import initialProducts from "@/data/products.json";
 
 export type Product = {
   id: number;
@@ -14,15 +14,24 @@ export type Product = {
   origin: string;
 };
 
-const dataDirectory = path.join(process.cwd(), "data");
-const productsFile = path.join(dataDirectory, "products.json");
+const productsKey = "pasar-segar:products";
+
+function redis() {
+  if (!process.env.KV_REST_API_URL && !process.env.UPSTASH_REDIS_REST_URL) {
+    throw new Error("Upstash Redis belum terhubung. Tambahkan integrasi Upstash ke proyek Vercel.");
+  }
+  return Redis.fromEnv();
+}
 
 export async function readProducts(): Promise<Product[]> {
-  const contents = await fs.readFile(productsFile, "utf8");
-  return JSON.parse(contents) as Product[];
+  const database = redis();
+  const products = await database.get<Product[]>(productsKey);
+  if (products) return products;
+  const seed = initialProducts as Product[];
+  await database.set(productsKey, seed);
+  return seed;
 }
 
 export async function writeProducts(products: Product[]) {
-  await fs.mkdir(dataDirectory, { recursive: true });
-  await fs.writeFile(productsFile, `${JSON.stringify(products, null, 2)}\n`, "utf8");
+  await redis().set(productsKey, products);
 }

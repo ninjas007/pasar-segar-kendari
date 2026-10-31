@@ -1,26 +1,28 @@
 import crypto from "crypto";
-import { promises as fs } from "fs";
-import path from "path";
-const dataDirectory = path.join(process.cwd(), "data");
-const adminFile = path.join(dataDirectory, "admin.json");
+import { Redis } from "@upstash/redis";
+const adminKey = "pasar-segar:admin";
 const secret = process.env.ADMIN_SESSION_SECRET || "pasar-segar-ganti-rahasia-produksi";
 type AdminRecord = { salt: string; hash: string };
+
+function redis() {
+  if (!process.env.KV_REST_API_URL && !process.env.UPSTASH_REDIS_REST_URL) {
+    throw new Error("Upstash Redis belum terhubung. Tambahkan integrasi Upstash ke proyek Vercel.");
+  }
+  return Redis.fromEnv();
+}
 
 async function hashPassword(password: string, salt: string) {
   return crypto.scryptSync(password, salt, 64).toString("hex");
 }
 
 async function getAdmin(): Promise<AdminRecord> {
-  try {
-    return JSON.parse(await fs.readFile(adminFile, "utf8")) as AdminRecord;
-  } catch (error: unknown) {
-    if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-    const salt = crypto.randomBytes(16).toString("hex");
-    const record = { salt, hash: await hashPassword("admin123!@#", salt) };
-    await fs.mkdir(dataDirectory, { recursive: true });
-    await fs.writeFile(adminFile, `${JSON.stringify(record, null, 2)}\n`);
-    return record;
-  }
+  const database = redis();
+  const stored = await database.get<AdminRecord>(adminKey);
+  if (stored) return stored;
+  const salt = crypto.randomBytes(16).toString("hex");
+  const record = { salt, hash: await hashPassword("admin123!@#", salt) };
+  await database.set(adminKey, record);
+  return record;
 }
 
 export async function verifyPassword(password: string) {
@@ -31,8 +33,7 @@ export async function verifyPassword(password: string) {
 
 export async function changePassword(password: string) {
   const salt = crypto.randomBytes(16).toString("hex");
-  await fs.mkdir(dataDirectory, { recursive: true });
-  await fs.writeFile(adminFile, `${JSON.stringify({ salt, hash: await hashPassword(password, salt) }, null, 2)}\n`);
+  await redis().set(adminKey, { salt, hash: await hashPassword(password, salt) });
 }
 
 export function createSession() {

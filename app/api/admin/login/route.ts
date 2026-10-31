@@ -13,6 +13,6 @@ export async function POST(request: NextRequest) {
     return response;
   } catch (error) {
     console.error("Admin login failed:", error);
-    return NextResponse.json({ message: "Login tidak dapat diproses. Periksa izin folder data." }, { status: 500 });
+    return NextResponse.json({ message: "Login tidak dapat diproses. Pastikan Upstash Redis sudah terhubung ke proyek Vercel." }, { status: 500 });
   }
 }
