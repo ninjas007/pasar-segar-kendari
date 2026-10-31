@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 type Product = {
   id: number;
   name: string;
@@ -17,7 +17,7 @@ type CartItem = Product & {
   selectedUnit: string;
   unitPrice: number;
 };
-const products: Product[] = [
+const initialProducts: Product[] = [
   {
     id: 1,
     name: "Ayam Kampung",
@@ -112,7 +112,14 @@ export default function Home() {
     [cartOpen, setCartOpen] = useState(false),
     [detail, setDetail] = useState<Product | null>(null),
     [unit, setUnit] = useState(""),
-    [sheet, setSheet] = useState<"info" | "contact" | null>(null);
+    [sheet, setSheet] = useState<"info" | "contact" | null>(null),
+    [products, setProducts] = useState<Product[]>(initialProducts);
+  useEffect(() => {
+    fetch("/api/products")
+      .then((response) => response.ok ? response.json() : initialProducts)
+      .then((data) => setProducts(data))
+      .catch(() => undefined);
+  }, []);
   const categories = ["Semua", "Sayur & Buah", "Ikan & Seafood", "Peternakan"];
   const filtered = useMemo(
     () =>
@@ -121,7 +128,7 @@ export default function Home() {
           (category === "Semua" || p.category === category) &&
           p.name.toLowerCase().includes(search.toLowerCase()),
       ),
-    [category, search],
+    [category, search, products],
   );
   const priceFor = (p: Product) => p.price;
   function add(p: Product, u = p.unit) {

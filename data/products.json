@@ -1,0 +1,9 @@
+[
+  {"id":1,"name":"Ayam Kampung","category":"Peternakan","price":110000,"unit":"ekor","image":"/assets/ayam-kampung.jpg","badge":"Rp110rb–130rb","description":"Ayam kampung asli, dijual per ekor dengan harga sesuai ukuran. Cocok untuk opor, soto, atau ungkep.","origin":"Kendari, Sulawesi Tenggara"},
+  {"id":2,"name":"Ayam Potong Negeri","category":"Peternakan","price":60000,"unit":"ekor","image":"/assets/ayam-negeri.jpg","badge":"Segar hari ini","description":"Ayam potong negeri segar, dijual per ekor. Praktis untuk goreng, bakar, maupun masakan sehari-hari.","origin":"Kendari, Sulawesi Tenggara"},
+  {"id":3,"name":"Ikan Cakalang","category":"Ikan & Seafood","price":20000,"unit":"kg","image":"/assets/cakalang.jpg","badge":"Baru tiba","description":"Ikan cakalang segar hasil tangkapan nelayan lokal, cocok untuk berbagai masakan.","origin":"Kendari, Sulawesi Tenggara"},
+  {"id":4,"name":"Ikan Katombo","category":"Ikan & Seafood","price":20000,"unit":"kg","image":"/assets/katombo.jpg","description":"Ikan katombo segar, kaya protein dan omega-3, cocok untuk digoreng atau dibakar.","origin":"Kendari, Sulawesi Tenggara"},
+  {"id":5,"name":"Tomat","category":"Sayur & Buah","price":15000,"unit":"ikat","image":"/assets/tomat.jpg","description":"Tomat merah segar, dijual per ikat. Cocok untuk sambal, jus, maupun masakan sehari-hari.","origin":"Kendari, Sulawesi Tenggara"},
+  {"id":6,"name":"Sayur Kangkung","category":"Sayur & Buah","price":7000,"unit":"ikat","image":"/assets/kangkung.jpg","description":"Kangkung segar dipetik pagi hari, dijual per ikat. Cocok untuk ditumis maupun plecing.","origin":"Kendari, Sulawesi Tenggara"},
+  {"id":7,"name":"Kacang Panjang","category":"Sayur & Buah","price":5000,"unit":"ikat","image":"/assets/kacang-panjang.jpg","description":"Kacang panjang segar, dijual per ikat. Cocok untuk tumisan maupun lalapan.","origin":"Kendari, Sulawesi Tenggara"}
+]

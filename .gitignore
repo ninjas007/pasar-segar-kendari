@@ -46,3 +46,6 @@ next-env.d.ts
 /.sites-runtime/
 /outputs/
 /work/
+
+# Generated after first admin login; contains the password hash.
+/data/admin.json
