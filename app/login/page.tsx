@@ -17,5 +17,5 @@ export default function LoginPage() {
     }
     setBusy(false);
   }
-  return <main className="adminShell"><form className="adminCard loginCard" onSubmit={submit}><p className="eyebrow">AREA TERBATAS</p><h1>Masuk Admin</h1><p>Kelola produk Pasar Segar Kendari.</p><label>Kata sandi<input required type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoFocus /></label>{message && <p className="formMessage error">{message}</p>}<button className="adminPrimary" disabled={busy}>{busy ? "Memeriksa..." : "Masuk"}</button></form></main>;
+  return <main className="adminShell"><form className="adminCard loginCard" onSubmit={submit}><p className="eyebrow">AREA TERBATAS</p><h1>Masuk Admin</h1><p>Kelola produk Pasar Segar Kendari.</p><p className="defaultPassword">Password awal: <b>admin123!@#</b></p><label>Kata sandi<input required type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoFocus /></label>{message && <p className="formMessage error">{message}</p>}<button className="adminPrimary" disabled={busy}>{busy ? "Memeriksa..." : "Masuk"}</button></form></main>;
 }

@@ -1,27 +1,20 @@
 import crypto from "crypto";
-import { Redis } from "@upstash/redis";
+import { redis } from "@/lib/redis";
 const adminKey = "pasar-segar:admin";
 const secret = process.env.ADMIN_SESSION_SECRET || "pasar-segar-ganti-rahasia-produksi";
 type AdminRecord = { salt: string; hash: string };
-
-function redis() {
-  if (!process.env.KV_REST_API_URL && !process.env.UPSTASH_REDIS_REST_URL) {
-    throw new Error("Upstash Redis belum terhubung. Tambahkan integrasi Upstash ke proyek Vercel.");
-  }
-  return Redis.fromEnv();
-}
 
 async function hashPassword(password: string, salt: string) {
   return crypto.scryptSync(password, salt, 64).toString("hex");
 }
 
 async function getAdmin(): Promise<AdminRecord> {
-  const database = redis();
-  const stored = await database.get<AdminRecord>(adminKey);
-  if (stored) return stored;
+  const database = await redis();
+  const stored = await database.get(adminKey);
+  if (stored) return JSON.parse(stored) as AdminRecord;
   const salt = crypto.randomBytes(16).toString("hex");
   const record = { salt, hash: await hashPassword("admin123!@#", salt) };
-  await database.set(adminKey, record);
+  await database.set(adminKey, JSON.stringify(record));
   return record;
 }
 
@@ -33,7 +26,7 @@ export async function verifyPassword(password: string) {
 
 export async function changePassword(password: string) {
   const salt = crypto.randomBytes(16).toString("hex");
-  await redis().set(adminKey, { salt, hash: await hashPassword(password, salt) });
+  await (await redis()).set(adminKey, JSON.stringify({ salt, hash: await hashPassword(password, salt) }));
 }
 
 export function createSession() {
