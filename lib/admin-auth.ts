@@ -1,16 +1,13 @@
 import crypto from "crypto";
 import { promises as fs } from "fs";
 import path from "path";
-import { promisify } from "util";
-
-const scrypt = promisify(crypto.scrypt);
 const dataDirectory = path.join(process.cwd(), "data");
 const adminFile = path.join(dataDirectory, "admin.json");
 const secret = process.env.ADMIN_SESSION_SECRET || "pasar-segar-ganti-rahasia-produksi";
 type AdminRecord = { salt: string; hash: string };
 
 async function hashPassword(password: string, salt: string) {
-  return Buffer.from((await scrypt(password, salt, 64)) as ArrayBuffer).toString("hex");
+  return crypto.scryptSync(password, salt, 64).toString("hex");
 }
 
 async function getAdmin(): Promise<AdminRecord> {
